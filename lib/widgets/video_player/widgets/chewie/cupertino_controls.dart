@@ -8,7 +8,7 @@ import 'package:Okuna/widgets/video_player/widgets/chewie/cupertino_progress_bar
 import 'package:Okuna/widgets/video_player/widgets/chewie/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:open_iconic_flutter/open_iconic_flutter.dart';
+// import 'package:open_iconic_flutter/open_iconic_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 class CupertinoControls extends StatefulWidget {
@@ -46,11 +46,12 @@ class _CupertinoControlsState extends State<CupertinoControls> {
       return chewieController.errorBuilder != null
           ? chewieController.errorBuilder!(
               context,
-              chewieController.videoPlayerController.value.errorDescription ?? '',
+              chewieController.videoPlayerController.value.errorDescription ??
+                  '',
             )
           : Center(
               child: Icon(
-                OpenIconicIcons.ban,
+                Icons.balcony,
                 color: Colors.white,
                 size: 42,
               ),
@@ -149,7 +150,6 @@ class _CupertinoControlsState extends State<CupertinoControls> {
                         _buildRemaining(iconColor)
                       ],
                     ),
-
             ),
           ),
         ),
@@ -192,8 +192,8 @@ class _CupertinoControlsState extends State<CupertinoControls> {
               child: Center(
                 child: Icon(
                   chewieController.isFullScreen
-                      ? OpenIconicIcons.fullscreenExit
-                      : OpenIconicIcons.fullscreenEnter,
+                      ? Icons.fullscreen_exit
+                      : Icons.fullscreen,
                   color: iconColor,
                   size: 12.0,
                 ),
@@ -287,9 +287,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
           right: 6.0,
         ),
         child: Icon(
-          controller.value.isPlaying
-              ? OpenIconicIcons.mediaPause
-              : OpenIconicIcons.mediaPlay,
+          controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
           color: iconColor,
           size: 16.0,
         ),
@@ -344,7 +342,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
             ..rotateX(math.pi)
             ..rotateZ(math.pi),
           child: Icon(
-            OpenIconicIcons.reload,
+            Icons.replay,
             color: iconColor,
             size: 12.0,
           ),
@@ -367,7 +365,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
           right: 8.0,
         ),
         child: Icon(
-          OpenIconicIcons.reload,
+          Icons.replay,
           color: iconColor,
           size: 12.0,
         ),
@@ -499,7 +497,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
       } else {
         _cancelAndRestartTimer();
 
-        if (!controller.value.initialized) {
+        if (!controller.value.isInitialized) {
           controller.initialize().then((_) {
             controller.play();
           });
@@ -513,14 +511,16 @@ class _CupertinoControlsState extends State<CupertinoControls> {
   void _skipBack() {
     _cancelAndRestartTimer();
     final beginning = Duration(seconds: 0).inMilliseconds;
-    final skip = (_latestValue!.position - Duration(seconds: 15)).inMilliseconds;
+    final skip =
+        (_latestValue!.position - Duration(seconds: 15)).inMilliseconds;
     controller.seekTo(Duration(milliseconds: math.max(skip, beginning)));
   }
 
   void _skipForward() {
     _cancelAndRestartTimer();
     final end = _latestValue!.duration!.inMilliseconds;
-    final skip = (_latestValue!.position + Duration(seconds: 15)).inMilliseconds;
+    final skip =
+        (_latestValue!.position + Duration(seconds: 15)).inMilliseconds;
     controller.seekTo(Duration(milliseconds: math.min(skip, end)));
   }
 

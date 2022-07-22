@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:Okuna/libs/pretty_count.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class OBCommunityTile extends StatelessWidget {
   static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';

@@ -7,7 +7,7 @@ import 'package:Okuna/widgets/avatars/avatar.dart';
 export 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/avatars/letter_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class OBHashtagAvatar extends StatelessWidget {
   final Hashtag hashtag;
@@ -49,9 +49,11 @@ class OBHashtagAvatar extends StatelessWidget {
           } else {
             String hashtagHexColor = hashtag.color!;
 
-            OpenbookProviderState openbookProviderState = OpenbookProvider.of(context);
+            OpenbookProviderState openbookProviderState =
+                OpenbookProvider.of(context);
 
-            Color hashtagColor =  openbookProviderState.utilsService.parseHexColor(hashtagHexColor);
+            Color hashtagColor = openbookProviderState.utilsService
+                .parseHexColor(hashtagHexColor);
             Color textColor = Colors.white;
 
             avatar = OBLetterAvatar(

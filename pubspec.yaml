@@ -10,7 +10,7 @@ description: Social Network
 version: 1.1.1+99
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.16.0 <3.0.0"
 
 publish_to: none
 
@@ -26,24 +26,22 @@ dependencies:
       url: https://github.com/OkunaOrg/inview_notifier_list.git
       ref: e52a3bb077dfb8815e6b7ac51f98ae1603ff26b2
   connectivity: ^3.0.6
-  visibility_detector: ^0.2.0
+  visibility_detector: ^0.2.2
   http_retry: ^0.2.0
   video_thumbnail: ^0.4.3
   flutter_ffmpeg: ^0.4.2
-  open_iconic_flutter: ^0.3.0
   retry: ^3.1.0
   shared_preferences: ^2.0.8
   flutter_markdown: ^0.6.6
   file_picker: ^3.0.2+2
   sentry_flutter: ^5.0.0
-  screen: ^0.0.5
   back_button_interceptor: ^5.0.0
   flutter_colorpicker: ^0.6.0
   intercom_flutter: ^3.2.1
   device_info: ^2.0.2
   flutter_pagewise: ^2.0.1
-  tinycolor: ^1.0.3
-  onesignal_flutter: ^3.2.3
+  flutter_screenutil: 5.5.2
+  onesignal_flutter: ^3.2.7
   flutter_advanced_networkimage:
     git:
       url: https://github.com/jozsefsallai/flutter_advanced_networkimage.git
@@ -58,6 +56,7 @@ dependencies:
   timeago: ^3.1.0
   public_suffix: ^3.0.0
   pigment: ^1.0.4
+  tinycolor2: ^2.1.0
   photo_view: ^0.12.0
   flutter_svg: ^0.22.0
   flutter_secure_storage: ^4.2.1
@@ -66,14 +65,10 @@ dependencies:
   throttling: ^1.0.0
   wakelock: ^0.5.6
   rxdart: ^0.27.2
-  video_player:
-    git:
-      url: https://github.com/jozsefsallai/flutter-plugins.git
-      ref: nullsafety
-      path: packages/video_player
+  video_player: ^2.2.7
   sprintf: "^6.0.0"
   image_picker: ^0.8.4+2
-  image_cropper: ^1.4.1
+  image_cropper: ^1.5.0
   shimmer: ^2.0.0
   share_plus: ^2.1.4
   path: ^1.8.0
@@ -96,7 +91,7 @@ dev_dependencies:
 # VERY HACKY WORKAROUND. This is temporary until `flutter_launcher_icons` and
 # `intl_generator` are playing nice with each other.
 dependency_overrides:
-  args: ^2.0.0
+  platform: ^3.1.0
 
 flutter_icons:
   android: true
@@ -174,7 +169,7 @@ flutter:
     - assets/images/fallbacks/cover-fallback.jpg
     - assets/images/fallbacks/avatar-fallback.jpg
     - assets/other/public_suffix_list.dat
-    - .env.json
+#    - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

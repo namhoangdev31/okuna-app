@@ -1,7 +1,7 @@
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class OBPostDivider extends StatelessWidget {
   const OBPostDivider();

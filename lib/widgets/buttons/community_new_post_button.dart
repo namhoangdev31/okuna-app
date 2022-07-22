@@ -9,7 +9,7 @@ import 'package:Okuna/widgets/buttons/floating_action_button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/material.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 
 class OBCommunityNewPostButton extends StatelessWidget {
   final bool isDisabled;

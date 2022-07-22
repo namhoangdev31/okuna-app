@@ -38,7 +38,8 @@ class _MaterialControlsState extends State<MaterialControls> {
       return chewieController?.errorBuilder != null
           ? chewieController!.errorBuilder!(
               context,
-              chewieController!.videoPlayerController.value.errorDescription ?? '',
+              chewieController!.videoPlayerController.value.errorDescription ??
+                  '',
             )
           : Center(
               child: Icon(
@@ -318,7 +319,7 @@ class _MaterialControlsState extends State<MaterialControls> {
       } else {
         _cancelAndRestartTimer();
 
-        if (!controller!.value.initialized) {
+        if (!controller!.value.isInitialized) {
           controller!.initialize().then((_) {
             controller!.play();
           });

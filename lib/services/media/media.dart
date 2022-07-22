@@ -238,8 +238,10 @@ class MediaService {
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
 
-    List<int> result = await FlutterImageCompress.compressWithList(Uint8List.fromList(imageBytes),
-        quality: 100, rotate: 0);
+    List<int> result = await FlutterImageCompress.compressWithList(
+        Uint8List.fromList(imageBytes),
+        quality: 100,
+        rotate: 0);
 
     final String processedImageUuid = _uuid.v4();
     String imageExtension = basename(image.path);
@@ -324,7 +326,8 @@ class MediaService {
   }
 
   Future<File> compressImage(File image) async {
-    Uint8List? compressedImageData = await FlutterImageCompress.compressWithFile(
+    Uint8List? compressedImageData =
+        await FlutterImageCompress.compressWithFile(
       image.absolute.path,
       quality: 80,
     );
@@ -408,13 +411,13 @@ class MediaService {
   }
 
   Future<File?> cropImage(File image, {double? ratioX, double? ratioY}) async {
-    return ImageCropper.cropImage(
+    return ImageCropper().cropImage(
         sourcePath: image.path,
         aspectRatio: ratioX != null && ratioY != null
             ? CropAspectRatio(ratioX: ratioX, ratioY: ratioY)
             : null,
         androidUiSettings: AndroidUiSettings(
-          toolbarTitle: _localizationService.media_service__crop_image,
+          toolbarTitle: _localizationService!.media_service__crop_image,
           toolbarColor: Colors.black,
           statusBarColor: Colors.black,
           toolbarWidgetColor: Colors.white,

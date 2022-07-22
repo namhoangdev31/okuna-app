@@ -9,7 +9,7 @@ export 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tinycolor/tinycolor.dart';
+import 'package:tinycolor2/tinycolor2.dart';
 import 'dart:ui' as ui;
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
@@ -130,8 +130,8 @@ class SmartMatch {
 List<SmartTextElement> _smartify(String text) {
   List<SmartMatch> matches = [];
   matches.addAll(_usernameRegex.allMatches(text).map((m) {
-    return SmartMatch(
-        UsernameElement(m.group(1)!), m.start + m.group(0)!.indexOf("@"), m.end);
+    return SmartMatch(UsernameElement(m.group(1)!),
+        m.start + m.group(0)!.indexOf("@"), m.end);
   }));
   matches.addAll(_communityNameRegex.allMatches(text).map((m) {
     return SmartMatch(CommunityNameElement(m.group(0)!), m.start, m.end);
@@ -275,7 +275,7 @@ class OBSmartText extends StatelessWidget {
       if (onUsernameTapped != null) {
         // Remove @
         String cleanedUsername =
-        username.substring(1, username.length).toLowerCase();
+            username.substring(1, username.length).toLowerCase();
         onUsernameTapped(cleanedUsername);
       }
     }
@@ -310,69 +310,70 @@ class OBSmartText extends StatelessWidget {
 
     return TextSpan(
         children: elements.map<InlineSpan>((element) {
-          late InlineSpan textSpan;
-          if (element is TextElement) {
-            textSpan = TextSpan(
-              text: element.text,
-              style: style,
-            );
-          } else if (element is SecondaryTextElement) {
-            textSpan = TextSpan(
-              text: element.text,
-              style: secondaryTextStyle,
-            );
-          } else if (element is LinkElement) {
-            textSpan = LinkTextSpan(
-              text: element.text,
-              style: linkStyle,
-              onPressed: () => _onOpen(element.url),
-            );
-          } else if (element is HashtagElement) {
-            String rawHashtagName =
-            element.text.substring(1, element.text.length);
-            String hashtagName = rawHashtagName.toLowerCase();
-            if (this.hashtagsMap != null &&
-                this.hashtagsMap!.containsKey(hashtagName)) {
-              Hashtag hashtag = this.hashtagsMap![hashtagName]!;
-              textSpan = WidgetSpan(
-                  baseline: TextBaseline.alphabetic,
-                  alignment: ui.PlaceholderAlignment.baseline,
-                  child: OBHashtag(
-                    discoDisplayMargin: const EdgeInsets.symmetric(vertical: 3),
-                    hashtag: hashtag,
-                    rawHashtagName: rawHashtagName,
-                    onPressed: (Hashtag hashtag) {
-                      if (onHashtagTapped != null) onHashtagTapped!(
-                          hashtag: hashtag, rawHashtagName: rawHashtagName);
-                    },
-                    textStyle: linkStyle,
-                  ));
-            } else {
-              textSpan = LinkTextSpan(
-                text: element.text,
-                style: linkStyle,
-                onPressed: () => onHashtagTapped!(rawHashtagName: rawHashtagName),
-              );
-            }
-          } else if (element is UsernameElement) {
-            textSpan = LinkTextSpan(
-              text: element.text,
-              style: usernameStyle,
-              onPressed: () => _onUsernameTapped(element.username),
-            );
-          } else if (element is CommunityNameElement) {
-            textSpan = LinkTextSpan(
-              text: element.text,
-              style: communityNameStyle,
-              onPressed: () => _onCommunityNameTapped(element.communityName),
-            );
-          }
+      late InlineSpan textSpan;
+      if (element is TextElement) {
+        textSpan = TextSpan(
+          text: element.text,
+          style: style,
+        );
+      } else if (element is SecondaryTextElement) {
+        textSpan = TextSpan(
+          text: element.text,
+          style: secondaryTextStyle,
+        );
+      } else if (element is LinkElement) {
+        textSpan = LinkTextSpan(
+          text: element.text,
+          style: linkStyle,
+          onPressed: () => _onOpen(element.url),
+        );
+      } else if (element is HashtagElement) {
+        String rawHashtagName = element.text.substring(1, element.text.length);
+        String hashtagName = rawHashtagName.toLowerCase();
+        if (this.hashtagsMap != null &&
+            this.hashtagsMap!.containsKey(hashtagName)) {
+          Hashtag hashtag = this.hashtagsMap![hashtagName]!;
+          textSpan = WidgetSpan(
+              baseline: TextBaseline.alphabetic,
+              alignment: ui.PlaceholderAlignment.baseline,
+              child: OBHashtag(
+                discoDisplayMargin: const EdgeInsets.symmetric(vertical: 3),
+                hashtag: hashtag,
+                rawHashtagName: rawHashtagName,
+                onPressed: (Hashtag hashtag) {
+                  if (onHashtagTapped != null)
+                    onHashtagTapped!(
+                        hashtag: hashtag, rawHashtagName: rawHashtagName);
+                },
+                textStyle: linkStyle,
+              ));
+        } else {
+          textSpan = LinkTextSpan(
+            text: element.text,
+            style: linkStyle,
+            onPressed: () => onHashtagTapped!(rawHashtagName: rawHashtagName),
+          );
+        }
+      } else if (element is UsernameElement) {
+        textSpan = LinkTextSpan(
+          text: element.text,
+          style: usernameStyle,
+          onPressed: () => _onUsernameTapped(element.username),
+        );
+      } else if (element is CommunityNameElement) {
+        textSpan = LinkTextSpan(
+          text: element.text,
+          style: communityNameStyle,
+          onPressed: () => _onCommunityNameTapped(element.communityName),
+        );
+      }
 
-          return textSpan;
-        }).toList());
+      return textSpan;
+    }).toList());
   }
 
-  String runeSubstring({required String input, required int start, required int end}) {
+  String runeSubstring(
+      {required String input, required int start, required int end}) {
     return String.fromCharCodes(input.runes.toList().sublist(start, end));
   }
 
@@ -392,7 +393,7 @@ class OBSmartText extends StatelessWidget {
       if (length + elementLength > maxlength) {
         elements.removeRange(i + 1, elements.length);
         element.text = runeSubstring(
-            input: element.text, start: 0, end: maxlength - length)
+                input: element.text, start: 0, end: maxlength - length)
             .trimRight();
 
         if (lengthOverflow == TextOverflow.ellipsis) {
@@ -421,7 +422,7 @@ class OBSmartText extends StatelessWidget {
         OBTheme theme = snapshot.data!;
 
         Color primaryTextColor =
-        themeValueParserService.parseColor(theme.primaryTextColor);
+            themeValueParserService.parseColor(theme.primaryTextColor);
 
         TextStyle textStyle = TextStyle(
             color: primaryTextColor,
@@ -433,10 +434,8 @@ class OBSmartText extends StatelessWidget {
         if (trailingSmartTextElement != null) {
           // This is ugly af, why do we even need this.
           Color secondaryTextColor =
-          themeValueParserService.parseColor(theme.secondaryTextColor);
-          secondaryTextColor = TinyColor(secondaryTextColor)
-              .lighten(10)
-              .color;
+              themeValueParserService.parseColor(theme.secondaryTextColor);
+          secondaryTextColor = TinyColor(secondaryTextColor).lighten(10).color;
           secondaryTextStyle = TextStyle(
               color: secondaryTextColor,
               fontSize: fontSize * 0.8,
@@ -476,11 +475,10 @@ class OBSmartText extends StatelessWidget {
 class LinkTextSpan extends TextSpan {
   LinkTextSpan({TextStyle? style, VoidCallback? onPressed, String? text})
       : super(
-    style: style,
-    text: text,
-    recognizer: new TapGestureRecognizer()
-      ..onTap = onPressed,
-  );
+          style: style,
+          text: text,
+          recognizer: new TapGestureRecognizer()..onTap = onPressed,
+        );
 }
 
 typedef OnHashtagTapped({Hashtag hashtag, String rawHashtagName});

@@ -220,8 +220,9 @@ class _MyAppState extends State<MyApp> {
               },
               '/waitlist/subscribe_done_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
-                WaitlistSubscribeArguments? args =
-                    ModalRoute.of(context)?.settings.arguments as WaitlistSubscribeArguments?;
+                WaitlistSubscribeArguments? args = ModalRoute.of(context)
+                    ?.settings
+                    .arguments as WaitlistSubscribeArguments?;
                 return OBWaitlistSubscribeDoneStep(count: args?.count ?? 0);
               }
             }),

@@ -235,7 +235,8 @@ class ChewieController extends ChangeNotifier {
 
   /// When the video playback runs  into an error, you can build a custom
   /// error message.
-  final Widget Function(BuildContext context, String errorMessage)? errorBuilder;
+  final Widget Function(BuildContext context, String errorMessage)?
+      errorBuilder;
 
   /// The Aspect Ratio of the Video. Important to get the correct size of the
   /// video!
@@ -300,7 +301,7 @@ class ChewieController extends ChangeNotifier {
     await videoPlayerController.setLooping(looping);
 
     if ((autoInitialize || autoPlay) &&
-        !videoPlayerController.value.initialized) {
+        !videoPlayerController.value.isInitialized) {
       await videoPlayerController.initialize();
     }
 

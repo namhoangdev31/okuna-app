@@ -75,7 +75,8 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
       mainWidget = chewieController?.errorBuilder != null
           ? chewieController!.errorBuilder!(
               context,
-              chewieController!.videoPlayerController.value.errorDescription ?? '',
+              chewieController!.videoPlayerController.value.errorDescription ??
+                  '',
             )
           : Center(
               child: new OBIcon(
@@ -409,7 +410,7 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
   void _play() {
     _cancelAndRestartTimer();
 
-    if (!controller!.value.initialized) {
+    if (!controller!.value.isInitialized) {
       controller!.initialize().then((_) {
         controller!.play();
       });

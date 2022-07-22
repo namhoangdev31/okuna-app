@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
@@ -38,8 +37,7 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage>
-    with WidgetsBindingObserver {
+class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   late UserService _userService;
   late ToastService _toastService;
@@ -242,7 +240,7 @@ class OBHomePageState extends State<OBHomePage>
       },
       items: [
         BottomNavigationBarItem(
-          title: const SizedBox(),
+          // title: const SizedBox(),
           icon: const OBIcon(OBIcons.home),
           activeIcon: const OBIcon(
             OBIcons.home,
@@ -250,7 +248,7 @@ class OBHomePageState extends State<OBHomePage>
           ),
         ),
         BottomNavigationBarItem(
-          title: const SizedBox(),
+          // title: const SizedBox(),
           icon: const OBIcon(OBIcons.search),
           activeIcon: const OBIcon(
             OBIcons.search,
@@ -258,7 +256,7 @@ class OBHomePageState extends State<OBHomePage>
           ),
         ),
         BottomNavigationBarItem(
-          title: const SizedBox(),
+          // title: const SizedBox(),
           icon: const OBIcon(OBIcons.communities),
           activeIcon: const OBIcon(
             OBIcons.communities,
@@ -266,13 +264,14 @@ class OBHomePageState extends State<OBHomePage>
           ),
         ),
         BottomNavigationBarItem(
-          title: const SizedBox(),
+          // title: const SizedBox(),
           icon: Stack(
             overflow: Overflow.visible,
             children: <Widget>[
               const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications != null
-                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
+              _loggedInUserUnreadNotifications != null &&
+                      _loggedInUserUnreadNotifications > 0
+                  ? Positioned(
                       right: -8,
                       child: OBBadge(
                         size: 10,
@@ -287,7 +286,7 @@ class OBHomePageState extends State<OBHomePage>
           ),
         ),
         BottomNavigationBarItem(
-            title: const SizedBox(),
+            // title: const SizedBox(),
             icon: OBAvatar(
               avatarUrl: _loggedInUserAvatarUrl,
               size: OBAvatarSize.extraSmall,
@@ -297,7 +296,7 @@ class OBHomePageState extends State<OBHomePage>
               size: OBAvatarSize.extraSmall,
             )),
         BottomNavigationBarItem(
-          title: const SizedBox(),
+          // title: const SizedBox(),
           icon: const OBIcon(OBIcons.menu),
           activeIcon: const OBIcon(
             OBIcons.menu,
@@ -408,7 +407,8 @@ class OBHomePageState extends State<OBHomePage>
         _modalService.openAcceptGuidelines(context: context);
       }
 
-      if (newUser.language == null || !supportedLanguages.contains(newUser.language!.code)) {
+      if (newUser.language == null ||
+          !supportedLanguages.contains(newUser.language!.code)) {
         _userService.setLanguageFromDefaults();
       }
       _userService.checkAndClearTempDirectories();
@@ -503,7 +503,8 @@ class OBHomePageState extends State<OBHomePage>
           message: error.toHumanReadableMessage(), context: context);
     } else if (error is HttpieRequestError) {
       String? errorMessage = await error.toHumanReadableMessage();
-      _toastService.error(message: errorMessage ?? 'Unknown error', context: context);
+      _toastService.error(
+          message: errorMessage ?? 'Unknown error', context: context);
     } else {
       _toastService.error(message: 'Unknown error', context: context);
       throw error;

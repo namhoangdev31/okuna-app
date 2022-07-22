@@ -157,7 +157,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   Future _initializeVideo() async {
     if (widget.videoUrl != null) {
-      _playerController = VideoPlayerController.network(widget.videoUrl);
+      _playerController = VideoPlayerController.network(widget.videoUrl!);
     } else if (widget.video != null) {
       _playerController = VideoPlayerController.file(widget.video!);
     } else if (widget.videoPlayerController != null) {

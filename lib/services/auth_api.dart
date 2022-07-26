@@ -30,7 +30,8 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
-  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
+  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH =
+      'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -170,12 +171,10 @@ class AuthApiService {
         body: body);
   }
 
-  Future<HttpieResponse> verifyRegisterToken(
-      {required String token}) {
+  Future<HttpieResponse> verifyRegisterToken({required String token}) {
     Map<String, dynamic> body = {'token': token};
 
-    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN',
-        body: body);
+    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN', body: body);
   }
 
   Future<HttpieResponse> getUserWithAuthToken(String authToken) {
@@ -270,14 +269,20 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(String userUsername) {
-    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
-    return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
+  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(
+      String userUsername) {
+    String path =
+        _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.putJSON(_makeApiUrl(path),
+        appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(String userUsername) {
-    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
-    return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
+  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(
+      String userUsername) {
+    String path =
+        _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchFollowers({required String query, int? count}) {
@@ -329,7 +334,6 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {required String username, required String password}) {
-
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
@@ -401,7 +405,8 @@ class AuthApiService {
       body['follow_request_notifications'] = followRequestNotifications;
 
     if (followRequestApprovedNotifications != null)
-      body['follow_request_approved_notifications'] = followRequestApprovedNotifications;
+      body['follow_request_approved_notifications'] =
+          followRequestApprovedNotifications;
 
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
@@ -468,9 +473,11 @@ class AuthApiService {
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
   }
 
-  String _makeEnableNewPostNotificationsForUserWithUsernamePath(String username) {
-    return _stringTemplateService
-        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH, {'userUsername': username});
+  String _makeEnableNewPostNotificationsForUserWithUsernamePath(
+      String username) {
+    return _stringTemplateService.parse(
+        ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH,
+        {'userUsername': username});
   }
 
   String _makeReportUserPath({required username}) {

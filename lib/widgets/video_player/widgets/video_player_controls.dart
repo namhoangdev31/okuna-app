@@ -327,7 +327,7 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
         ? _latestValue!.position
         : Duration.zero;
     final duration = _latestValue != null && _latestValue!.duration != null
-        ? _latestValue!.duration!
+        ? _latestValue!.duration
         : Duration.zero;
 
     return new Padding(

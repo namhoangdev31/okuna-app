@@ -113,7 +113,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
         ],
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/splash/touchId');
+        Navigator.pushNamed(context, '/auth/token');
       },
     );
   }

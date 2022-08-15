@@ -99,7 +99,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
     } else if (widget.video != null) {
       visibilityKeyFallback = widget.video!.path;
     } else if (widget.videoPlayerController != null) {
-      visibilityKeyFallback = widget.videoPlayerController!.dataSource!;
+      visibilityKeyFallback = widget.videoPlayerController!.dataSource;
     } else {
       throw Exception(
           'Video dialog requires video, videoUrl or videoPlayerController.');
@@ -402,7 +402,7 @@ class OBVideoPlayerController {
       return 'unknown';
     }
 
-    return _state._playerController!.dataSource!;
+    return _state._playerController!.dataSource;
   }
 
   void debugLog(String log) {

@@ -56,7 +56,7 @@ class _VideoProgressBarState extends State<OBVideoProgressBar> {
       final RenderBox box = context.findRenderObject()! as RenderBox;
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
-      final Duration position = controller.value.duration! * relative;
+      final Duration position = controller.value.duration * relative;
       controller.seekTo(position);
     }
 
@@ -147,11 +147,11 @@ class _ProgressBarPainter extends CustomPainter {
       return;
     }
     final double playedPart = value.position.inMilliseconds /
-        value.duration!.inMilliseconds *
+        value.duration.inMilliseconds *
         size.width;
     for (DurationRange range in value.buffered) {
-      final double start = range.startFraction(value.duration!) * size.width;
-      final double end = range.endFraction(value.duration!) * size.width;
+      final double start = range.startFraction(value.duration) * size.width;
+      final double end = range.endFraction(value.duration) * size.width;
       canvas.drawRRect(
         new RRect.fromRectAndRadius(
           new Rect.fromPoints(

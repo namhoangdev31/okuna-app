@@ -54,7 +54,7 @@ class _VideoProgressBarState extends State<CupertinoVideoProgressBar> {
       final box = context.findRenderObject() as RenderBox;
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
-      final Duration position = controller.value.duration! * relative;
+      final Duration position = controller.value.duration * relative;
       controller.seekTo(position);
     }
 
@@ -145,12 +145,12 @@ class _ProgressBarPainter extends CustomPainter {
       return;
     }
     final double playedPartPercent =
-        value.position.inMilliseconds / value.duration!.inMilliseconds;
+        value.position.inMilliseconds / value.duration.inMilliseconds;
     final double playedPart =
         playedPartPercent > 1 ? size.width : playedPartPercent * size.width;
     for (DurationRange range in value.buffered) {
-      final double start = range.startFraction(value.duration!) * size.width;
-      final double end = range.endFraction(value.duration!) * size.width;
+      final double start = range.startFraction(value.duration) * size.width;
+      final double end = range.endFraction(value.duration) * size.width;
       canvas.drawRRect(
         RRect.fromRectAndRadius(
           Rect.fromPoints(

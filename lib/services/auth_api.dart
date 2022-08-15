@@ -488,4 +488,9 @@ class AuthApiService {
   String _makeApiUrl(String string) {
     return '$apiURL$string';
   }
+
+  // Future<HttpieResponse> refreshToken(String? refreshToken) {
+  //   return _httpService
+  //       .post('$apiURL$REFRESH_TOKEN', body: {'refresh': refreshToken});
+  // }
 }

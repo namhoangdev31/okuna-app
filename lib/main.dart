@@ -16,9 +16,9 @@ import 'package:Okuna/pages/auth/reset_password/reset_password_success_step.dart
 import 'package:Okuna/pages/auth/reset_password/set_new_password_step.dart';
 import 'package:Okuna/pages/auth/reset_password/verify_reset_password_link_step.dart';
 import 'package:Okuna/pages/auth/login.dart';
-import 'package:Okuna/pages/auth/splash.dart';
+import 'package:Okuna/UiAndLogic/splash.dart';
 import 'package:Okuna/pages/auth/splash_model.dart';
-import 'package:Okuna/pages/auth/touchauth.dart';
+import 'package:Okuna/UiAndLogic/auth/touchauth.dart';
 import 'package:Okuna/pages/home/home.dart';
 import 'package:Okuna/pages/waitlist/subscribe_done_step.dart';
 import 'package:Okuna/pages/waitlist/subscribe_email_step.dart';

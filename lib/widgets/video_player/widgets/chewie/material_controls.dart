@@ -255,7 +255,7 @@ class _MaterialControlsState extends State<MaterialControls> {
         ? _latestValue!.position
         : Duration.zero;
     final duration = _latestValue != null && _latestValue!.duration != null
-        ? _latestValue!.duration!
+        ? _latestValue!.duration
         : Duration.zero;
 
     return Padding(

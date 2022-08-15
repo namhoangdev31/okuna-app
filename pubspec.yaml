@@ -35,6 +35,8 @@ dependencies:
   flutter_markdown: ^0.6.6
   file_picker: ^3.0.2+2
   sentry_flutter: ^5.0.0
+  local_auth: 1.1.9
+  flutter_native_splash: ^2.0.5
   back_button_interceptor: ^5.0.0
   flutter_colorpicker: ^0.6.0
   intercom_flutter: ^3.2.1
@@ -81,6 +83,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.3
+  flutter_bloc: ^8.0.1
+  firebase_analytics: ^9.3.0
+  google_fonts: ^3.0.1
+  socket_io_client: ^2.0.0
+  equatable: ^2.0.3
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -169,6 +177,13 @@ flutter:
     - assets/images/fallbacks/cover-fallback.jpg
     - assets/images/fallbacks/avatar-fallback.jpg
     - assets/other/public_suffix_list.dat
+    - assets/images/Logo_set.png
+    - assets/images/Logo_set1.png
+    - assets/images/ic_finger.png
+    - assets/images/Vector.png
+    - assets/images/Currency.png
+    - assets/images/Path 3 Copy 4.png
+    - assets/images/lo_go.mp4
 #    - .env.json
 
   # An image asset can refer to one or more resolution-specific "variants", see

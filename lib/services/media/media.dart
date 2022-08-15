@@ -417,7 +417,7 @@ class MediaService {
             ? CropAspectRatio(ratioX: ratioX, ratioY: ratioY)
             : null,
         androidUiSettings: AndroidUiSettings(
-          toolbarTitle: _localizationService!.media_service__crop_image,
+          toolbarTitle: _localizationService.media_service__crop_image,
           toolbarColor: Colors.black,
           statusBarColor: Colors.black,
           toolbarWidgetColor: Colors.white,

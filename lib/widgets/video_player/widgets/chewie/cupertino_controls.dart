@@ -313,7 +313,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
 
   Widget _buildRemaining(Color iconColor) {
     final position = _latestValue != null && _latestValue!.duration != null
-        ? _latestValue!.duration! - _latestValue!.position
+        ? _latestValue!.duration - _latestValue!.position
         : Duration(seconds: 0);
 
     return Padding(
@@ -518,7 +518,7 @@ class _CupertinoControlsState extends State<CupertinoControls> {
 
   void _skipForward() {
     _cancelAndRestartTimer();
-    final end = _latestValue!.duration!.inMilliseconds;
+    final end = _latestValue!.duration.inMilliseconds;
     final skip =
         (_latestValue!.position + Duration(seconds: 15)).inMilliseconds;
     controller.seekTo(Duration(milliseconds: math.min(skip, end)));

@@ -81,17 +81,21 @@ export 'package:Okuna/services/httpie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
+import '../coin_service/log/log_debug.dart';
 import 'intercom.dart';
 
 class UserService {
   late OBStorage _userStorage;
 
   static const STORAGE_KEY_AUTH_TOKEN = 'authToken';
+  static const STORAGE_KEY_REFRESH_TOKEN = 'refreshToken';
   static const STORAGE_KEY_USER_DATA = 'data';
   static const STORAGE_FIRST_POSTS_DATA = 'firstPostsData';
   static const STORAGE_TOP_POSTS_DATA = 'topPostsData';
   static const STORAGE_TOP_POSTS_LAST_VIEWED_ID = 'topPostsLastViewedId';
+  static const STORAGE_KEY_ACCESS_TOKEN = 'accessToken';
 
+  LogDebug mLog = LogDebug('user.dart');
   late AuthApiService _authApiService;
   late HttpieService _httpieService;
   late PostsApiService _postsApiService;
@@ -113,7 +117,8 @@ class UserService {
   late DraftService _draftService;
   late PushNotificationsService _pushNotificationService;
   late IntercomService _intercomService;
-
+  String? _accessToken;
+  String? apiUrlChat;
   // If this is null, means user logged out.
   Stream<User?> get loggedInUserChange => _loggedInUserChangeSubject.stream;
 
@@ -126,6 +131,8 @@ class UserService {
   Future<Device>? _getOrCreateCurrentDeviceCache;
 
   static const MAX_TEMP_DIRECTORY_CACHE_MB = 200; // 200mb
+
+  // CancelableOperation<HttpieResponse>? _refreshTokenOperation;
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
@@ -356,8 +363,7 @@ class UserService {
   }
 
   Future<void> verifyPasswordReset(
-      {required String newPassword,
-      required String passwordResetToken}) async {
+      {required String newPassword, required String passwordResetToken}) async {
     HttpieResponse response = await _authApiService.verifyPasswordReset(
         newPassword: newPassword, passwordResetToken: passwordResetToken);
     _checkResponseIsOk(response);
@@ -485,7 +491,10 @@ class UserService {
   }
 
   Future<TopPostsList> getTopPosts(
-      {int? maxId, int? minId, int? count, bool? excludeJoinedCommunities}) async {
+      {int? maxId,
+      int? minId,
+      int? count,
+      bool? excludeJoinedCommunities}) async {
     HttpieResponse response = await _postsApiService.getTopPosts(
         maxId: maxId,
         minId: minId,
@@ -571,7 +580,9 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String? text, List<Circle> circles = const [], bool isDraft = false}) async {
+      {String? text,
+      List<Circle> circles = const [],
+      bool isDraft = false}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text,
         circleIds: circles.map((circle) => circle.id!).toList(),
@@ -586,8 +597,7 @@ class UserService {
     return Post.fromJson(json.decode(responseBody));
   }
 
-  Future<void> addMediaToPost(
-      {required File file, required Post post}) async {
+  Future<void> addMediaToPost({required File file, required Post post}) async {
     HttpieStreamedResponse response =
         await _postsApiService.addMediaToPost(file: file, postUuid: post.uuid!);
 
@@ -703,8 +713,8 @@ class UserService {
 
   Future<ReactionsEmojiCountList> getReactionsEmojiCountForPost(
       Post post) async {
-    HttpieResponse response =
-        await _postsApiService.getReactionsEmojiCountForPostWithUuid(post.uuid!);
+    HttpieResponse response = await _postsApiService
+        .getReactionsEmojiCountForPostWithUuid(post.uuid!);
 
     _checkResponseIsOk(response);
 
@@ -1099,8 +1109,8 @@ class UserService {
   }
 
   Future<void> requestToFollowUser(User user) async {
-    HttpieResponse response =
-        await _followsApiService.requestToFollowUserWithUsername(user.username!);
+    HttpieResponse response = await _followsApiService
+        .requestToFollowUserWithUsername(user.username!);
     _checkResponseIsCreated(response);
     user.setIsFollowRequested(true);
   }
@@ -1243,8 +1253,8 @@ class UserService {
 
   Future<FollowsList> createFollowsList(
       {required String name, Emoji? emoji}) async {
-    HttpieResponse response =
-        await _followsListsApiService.createList(name: name, emojiId: emoji?.id);
+    HttpieResponse response = await _followsListsApiService.createList(
+        name: name, emojiId: emoji?.id);
     _checkResponseIsCreated(response);
     return FollowsList.fromJSON(json.decode(response.body));
   }
@@ -1306,7 +1316,9 @@ class UserService {
   }
 
   Future<UserInvitesList> searchUserInvites(
-      {int? count, UserInviteFilterByStatus? status, required String query}) async {
+      {int? count,
+      UserInviteFilterByStatus? status,
+      required String query}) async {
     bool isPending = status != null
         ? UserInvite.convertUserInviteStatusToBool(status)
         : UserInvite.convertUserInviteStatusToBool(
@@ -1524,7 +1536,9 @@ class UserService {
   }
 
   Future<UsersList> getMembersForCommunity(Community community,
-      {int? count, int? maxId, List<CommunityMembersExclusion>? exclude}) async {
+      {int? count,
+      int? maxId,
+      List<CommunityMembersExclusion>? exclude}) async {
     HttpieResponse response = await _communitiesApiService
         .getMembersForCommunityWithId(community.name!,
             count: count,
@@ -1566,8 +1580,7 @@ class UserService {
         await _communitiesApiService.inviteUserToCommunity(
             communityName: community.name!, username: user.username!);
     _checkResponseIsCreated(response);
-    User.fromJson(json.decode(response.body),
-        storeInMaxSessionCache: true);
+    User.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
   }
 
   Future<void> uninviteUserFromCommunity(
@@ -1576,8 +1589,7 @@ class UserService {
         await _communitiesApiService.uninviteUserFromCommunity(
             communityName: community.name!, username: user.username!);
     _checkResponseIsOk(response);
-    User.fromJson(json.decode(response.body),
-        storeInMaxSessionCache: true);
+    User.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
   }
 
   Future<CommunitiesList> getJoinedCommunities(
@@ -1777,8 +1789,9 @@ class UserService {
 
   Future<void> disableNewPostNotificationsForCommunity(
       Community community) async {
-    HttpieResponse response = await _communitiesApiService
-        .disableNewPostNotificationsForCommunity(communityName: community.name!);
+    HttpieResponse response =
+        await _communitiesApiService.disableNewPostNotificationsForCommunity(
+            communityName: community.name!);
     _checkResponseIsOk(response);
 
     Community.fromJSON(json.decode(response.body));
@@ -2173,8 +2186,9 @@ class UserService {
       ModeratedObject moderatedObject,
       {int? maxId,
       int? count}) async {
-    HttpieResponse response = await _moderationApiService
-        .getModeratedObjectLogs(moderatedObject.id!, maxId: maxId, count: count);
+    HttpieResponse response =
+        await _moderationApiService.getModeratedObjectLogs(moderatedObject.id!,
+            maxId: maxId, count: count);
     _checkResponseIsOk(response);
 
     return ModeratedObjectLogsList.fromJson(json.decode(response.body));
@@ -2478,6 +2492,45 @@ class UserService {
 
   TopPostsList _makeTopPostsList(String postsData) {
     return TopPostsList.fromJson((json.decode(postsData)));
+  }
+
+  // Future _refreshToken() async {
+  //   try {
+  //     HttpieResponse response;
+  //     if (_refreshTokenOperation == null) {
+  //       _refreshTokenOperation = CancelableOperation.fromFuture(
+  //           _authApiService.refreshToken(_refreshingToken));
+  //     }
+  //     response = await _refreshTokenOperation!.value;
+  //     if (response.isOk()) {
+  //       String? newAccessToken = json.decode(response.body)['access'];
+  //       await _setAuthToken(newAccessToken);
+  //       isRefresh = true;
+  //       print('###_refreshToken ==============> NEW TOKEN: $newAccessToken');
+  //     } else if (response.isUnauthorized()) {
+  //       mLog.show("### Can't refresh token ====>  LOG-OUT");
+  //       logout();
+  //     }
+  //   } catch (error) {
+  //   } finally {
+  //     _refreshTokenOperation = null;
+  //   }
+  //   return null;
+  // }
+
+  // Future<String?> refreshToken() async {
+  //   await _refreshToken();
+  //   return _accessToken;
+  // }
+
+  Future<String?> getStoredAuthToken() async {
+    String? authToken = await _userStorage.get(STORAGE_KEY_ACCESS_TOKEN);
+    if (authToken != null) _accessToken = authToken;
+    return authToken;
+  }
+
+  String? getApiUrlChat() {
+    return apiUrlChat;
   }
 }
 

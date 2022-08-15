@@ -30,7 +30,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
             image: DecorationImage(
                 image: new AssetImage('assets/images/splash-background.png'),
                 fit: BoxFit.cover),
-        color: Colors.white),
+            color: Colors.white),
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildLogo())),
       ),
@@ -48,9 +48,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-              child: _buildCreateAccountButton(context: context)
-            ),
+            Expanded(child: _buildCreateAccountButton(context: context)),
             Expanded(
               child: _buildLoginButton(context: context),
             ),
@@ -109,7 +107,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            buttonText,
+            'Touch Finger',
             style: TextStyle(fontSize: 18.0),
           )
         ],
@@ -119,5 +117,4 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
       },
     );
   }
-
 }
